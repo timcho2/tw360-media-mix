@@ -11,7 +11,7 @@ st.set_page_config(page_title="TW360 미디어 믹스 AI 자동화", page_icon="
 # ==========================================
 # 🔑 공용 API 키 설정 (여기에 발급받은 API 키를 입력하세요!)
 # ==========================================
-GEMINI_API_KEY = "AIzaSyDh8KXFTv3Vgm-PfUWub9E8R0DG-zUADks"
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 
 st.markdown("""
     <style>
