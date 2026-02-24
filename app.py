@@ -10,16 +10,18 @@ st.set_page_config(page_title="TW360 미디어 믹스 AI 자동화", page_icon="
 
 hide_streamlit_style = """
             <style>
-            /* 1. 우측 상단 깃허브 아이콘(Viewer Badge) 숨기기 */
-            .viewerBadge_container__1QSob {display: none !important;}
-            .styles_viewerBadge__1yB5_ {display: none !important;}
-            
-            /* 2. 상단 우측 햄버거 메뉴 및 헤더 전체 숨기기 (선택사항이나 깔끔함을 위해 추천) */
+            /* 1. 상단 우측 햄버거 메뉴 및 헤더 전체 숨기기 */
             [data-testid="stHeader"] {display: none !important;}
             
-            /* 3. 하단 Hosted with Streamlit 워터마크 숨기기 */
+            /* 2. 하단 Hosted with Streamlit 워터마크 숨기기 */
             footer {visibility: hidden !important;}
             [data-testid="stBottom"] {display: none !important;}
+            
+            /* 3. 우측 하단 프로필 아이콘 및 깃허브 뱃지 '완벽' 숨기기 (링크 추적 방식) */
+            .viewerBadge_container__1QSob {display: none !important;}
+            .styles_viewerBadge__1yB5_ {display: none !important;}
+            [class^="viewerBadge"] {display: none !important;}
+            a[href^="https://share.streamlit.io/user/"] {display: none !important;}
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
