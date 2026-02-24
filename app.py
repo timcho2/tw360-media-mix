@@ -8,7 +8,21 @@ import json
 # --- 1. 페이지 및 디자인 설정 ---
 st.set_page_config(page_title="TW360 미디어 믹스 AI 자동화", page_icon="✨", layout="wide")
 
-
+hide_streamlit_style = """
+            <style>
+            /* 1. 우측 상단 깃허브 아이콘(Viewer Badge) 숨기기 */
+            .viewerBadge_container__1QSob {display: none !important;}
+            .styles_viewerBadge__1yB5_ {display: none !important;}
+            
+            /* 2. 상단 우측 햄버거 메뉴 및 헤더 전체 숨기기 (선택사항이나 깔끔함을 위해 추천) */
+            [data-testid="stHeader"] {display: none !important;}
+            
+            /* 3. 하단 Hosted with Streamlit 워터마크 숨기기 */
+            footer {visibility: hidden !important;}
+            [data-testid="stBottom"] {display: none !important;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # ==========================================
 # 🔑 공용 API 키 설정 (여기에 발급받은 API 키를 입력하세요!)
