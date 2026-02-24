@@ -8,14 +8,7 @@ import json
 # --- 1. 페이지 및 디자인 설정 ---
 st.set_page_config(page_title="TW360 미디어 믹스 AI 자동화", page_icon="✨", layout="wide")
 
-hide_streamlit_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 # ==========================================
 # 🔑 공용 API 키 설정 (여기에 발급받은 API 키를 입력하세요!)
