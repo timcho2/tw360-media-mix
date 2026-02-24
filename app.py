@@ -4,6 +4,7 @@ import openpyxl
 from io import BytesIO
 import google.generativeai as genai
 import json
+import streamlit.components.v1 as components  # GTM 적용을 위한 필수 라이브러리 추가
 
 # --- 1. 페이지 및 디자인 설정 ---
 st.set_page_config(page_title="TW360 미디어 믹스 AI 자동화", page_icon="✨", layout="wide")
@@ -17,7 +18,7 @@ hide_streamlit_style = """
             footer {visibility: hidden !important;}
             [data-testid="stBottom"] {display: none !important;}
             
-            /* 3. 우측 하단 프로필 아이콘 및 깃허브 뱃지 '완벽' 숨기기 (링크 추적 방식) */
+            /* 3. 우측 하단 프로필 아이콘 및 깃허브 뱃지 숨기기 (기본 CSS 방식) */
             .viewerBadge_container__1QSob {display: none !important;}
             .styles_viewerBadge__1yB5_ {display: none !important;}
             [class^="viewerBadge"] {display: none !important;}
@@ -26,8 +27,35 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+# --- GTM (Google Tag Manager) 적용 함수 ---
+def inject_gtm():
+    gtm_code = """
+    <script>
+    if (!window.parent.document.getElementById('gtm-script')) {
+        var script = window.parent.document.createElement('script');
+        script.id = 'gtm-script';
+        script.innerHTML = `
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window.parent, window.parent.document, 'script', 'dataLayer', 'GTM-P6CKTSLM');
+        `;
+        window.parent.document.head.appendChild(script);
+
+        var noscript = window.parent.document.createElement('noscript');
+        noscript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P6CKTSLM" height="0" width="0" style="display:none;visibility:hidden"></iframe>`;
+        window.parent.document.body.appendChild(noscript);
+    }
+    </script>
+    """
+    components.html(gtm_code, height=0, width=0)
+
+# GTM 함수 실행
+inject_gtm()
+
 # ==========================================
-# 🔑 공용 API 키 설정 (여기에 발급받은 API 키를 입력하세요!)
+# 🔑 공용 API 키 설정 (Streamlit Secrets 활용)
 # ==========================================
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 
@@ -92,9 +120,7 @@ with st.sidebar:
     email_text = st.text_area("📧 플랜 요청 메일 내용", height=300, placeholder="메일 내용을 이곳에 복사+붙여넣기 하세요.")
     
     if st.button("✨ 메일 분석하기"):
-        if GEMINI_API_KEY == "여기에_실제_API_키를_붙여넣으세요":
-            st.error("코드 내에 API 키가 설정되지 않았습니다. app.py 파일 상단의 GEMINI_API_KEY 값을 변경해주세요.")
-        elif not email_text:
+        if not email_text:
             st.error("메일 내용을 입력해주세요.")
         else:
             try:
